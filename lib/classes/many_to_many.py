@@ -37,11 +37,14 @@ class Author:
         return list(set([article.magazine for article in self.articles()]))
 
     def add_article(self, magazine, title):
-        pass
+        article = Article(self, magazine, title)
+        return article
 
     def topic_areas(self):
-        pass
+        return list(set([article.magazine.category for article in self.articles()])) if self.articles() else None
 
+    def contributing_authors(self):
+        return [author for author in Author.all if len(author.articles()) > 0]
 class Magazine:
     def __init__(self, name, category):
         self.name = name
