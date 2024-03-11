@@ -4,17 +4,30 @@ class Article:
     
     def __init__(self, author, magazine, title):
         self.author = author
+        self._author = author
         self.magazine = magazine
-        self._title = str(title)
+        self._title = title
         # appends data to the empty list
         Article.all.append(self)
+        
+#         Article __init__(self, author, magazine, title)
+# Article is initialized with an Author instance, a Magazine instance, and a title.
+# Article property title
+# Returns the article's title
+# Titles must be of type str
+# Titles must be between 5 and 50 characters, inclusive
+# Should not be able to change after the article is instantiated.
+# hint: hasattr()
         
     @property
     def title(self):
         return self._title
     @title.setter
-    def title(self,new_title):
-        return new_title
+    def title(self,title):
+        if not isinstance (title, str) or 5 <= len(title) <= 50:
+            raise ValueError('Invalid title')
+        else:
+            self._title = title
         
         
 class Author:
