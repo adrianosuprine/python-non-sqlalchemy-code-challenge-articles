@@ -19,13 +19,22 @@ class Article:
         
 class Author:
     def __init__(self, name):
-        self.name = name
+        self._name = name
+        
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self,new_name):
+        self.new_name = new_name
+        return self._name
 
     def articles(self):
-        pass
+        return [articles for articles in Article.all if articles.author == self]
 
     def magazines(self):
-        pass
+        return list(set([article.magazine for article in self.articles()]))
 
     def add_article(self, magazine, title):
         pass
