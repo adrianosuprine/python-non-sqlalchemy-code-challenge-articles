@@ -47,19 +47,59 @@ class Author:
         return [author for author in Author.all if len(author.articles()) > 0]
 class Magazine:
     def __init__(self, name, category):
-        self.name = name
-        self.category = category
+        self._name = name
+        self._category = category
+        
+    @property
+    def name(self):
+        return self._name
+    @property
+    def category(self):
+        return self._category
+    @name.setter 
+    def name(self,new_name):
+        if isinstance (new_name,str):
+            if len(new_name) >= 2 and len(new_name)  <= 16:
+                self._name = new_name
+        return self._name
+    
+    @category.setter 
+    def category(self,new_category):
+        if isinstance (new_category,str):
+            if len(new_category) > 0:
+                self._category = new_category
+        return self._category
+    
 
     def articles(self):
-        pass
+        return [article for article in Article.all if article.magazine == self]
 
     def contributors(self):
-        pass
+        return list(set([article.author for article in self.articles()]))
 
     def article_titles(self):
-        pass
+        titles = [article.title for article in self.articles()]
+        if titles:
+            return titles 
+        else:
+            None
+        
 
     def contributing_authors(self):
-        pass
+        authors = {}
+        for article in self.articles():
+            if article.author in authors:
+                authors[article.author] += 1
+            else:
+                authors[article.author] = 1
+        contributing_authors = [author for author, count in authors.items() if count > 2]
+        if contributing_authors:
+            return contributing_authors
+        else:
+            None
 
-# 
+
+
+
+
+
